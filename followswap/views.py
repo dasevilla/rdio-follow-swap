@@ -14,7 +14,7 @@ from library.models import RdioConnection
 
 def home(request):
     c = RequestContext(request, {
-        # something good
+        'connection_count': RdioConnection.objects.filter(status='connected').count()
     })
     return render_to_response('index.html', c)
 
