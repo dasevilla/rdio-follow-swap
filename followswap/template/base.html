@@ -9,12 +9,13 @@
         <link rel="shortcut icon" type="image/x-icon" href="{{STATIC_URL}}img/favicon.ico" />
 
         <link rel="stylesheet" href="{{STATIC_URL}}css/bootstrap.min.css" />
+        <link rel="stylesheet" href="{{STATIC_URL}}css/bootstrap-responsive.min.css" />
         <link rel="stylesheet" href="{{STATIC_URL}}css/style.css" />
         <title>{% block title %}My amazing site{% endblock %}</title>
     </head>
 
     <body>
-        <div class="navbar navbar-fixed-top">
+        <div class="navbar">
             <div class="navbar-inner">
                 <div class="container">
                     <a class="btn btn-navbar" data-toggle="collapse" data-target=".nav-collapse">
@@ -22,13 +23,16 @@
                         <span class="icon-bar"></span>
                         <span class="icon-bar"></span>
                     </a>
-                    <a class="brand" href="#">Follow Swap for Rdio</a>
-                    <div class="nav-collapse">
+                    <a class="brand" href="/">Follow Swap for Rdio</a>
+                    <div class="nav-collapse collapse">
                         <ul class="nav">
                             <li class="{% activelink 'index' %}">
                                 <a href="{% url index %}">Home</a>
                             </li>
                             {% if user.is_authenticated %}
+                            <li class="{% activelink 'give' %}">
+                                <a href="{% url give %}">Follow</a>
+                            </li>
                             <li class="{% activelink 'history' %}">
                                 <a href="{% url history %}">History</a>
                             </li>
@@ -70,22 +74,13 @@
             </div>
         </div>
 
-        <div id="sidebar">
-            {% block sidebar %}
-            <ul>
-                <li><a href="/">Home</a></li>
-                <li><a href="/blog/">Blog</a></li>
-            </ul>
-            {% endblock %}
-        </div>
-
         <div class="container">
                 {% block content %}{% endblock %}
         </div>
 
         {% block javascript %}
         <script type="text/javascript" src="{{STATIC_URL}}js/jquery-1.9.1.min.js"></script>
-        <script type="text/javascript" src="{{STATIC_URL}}js/bootstrap.js"></script>
+        <script type="text/javascript" src="{{STATIC_URL}}js/bootstrap.min.js"></script>
         {% endblock %}
     </body>
 </html>
