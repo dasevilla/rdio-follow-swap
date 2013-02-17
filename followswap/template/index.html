@@ -1,0 +1,30 @@
+{% extends "base.html" %}
+
+{% block title %}Welcome{% endblock %}
+
+{% block content %}
+<div class="row">
+    <div class="span12">
+
+        <div class="hero-unit">
+            {% if user.is_authenticated %}
+            <h1>Welcome {{user.first_name}}!</h1>
+            <p>Click the button to follow a random person and the next person to click the button will follow you.</p>
+            <p>
+                <a class="btn btn-primary btn-large"
+                href="{% url give %}">Sounds fun!</a>
+            </p>
+            {% else %}
+            <h1>Howdy stranger!</h1>
+            <p>Get started by signing in with your Rdio account.</p>
+            <p>
+                <a class="btn btn-primary btn-large"
+                href="{% url socialauth_begin backend='rdio_oauth2' %}">Sign In</a>
+            </p>
+            {% endif %}
+
+        </div>
+
+    </div>
+</div>
+{% endblock %}

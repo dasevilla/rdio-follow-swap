@@ -1,0 +1,15 @@
+{% extends "base.html" %}
+
+{% block title %}Welcome{% endblock %}
+
+{% block content %}
+<div class="row">
+    <div class="span12">
+        <p>Sorry, there's nobody to follow you yet. You'll get one soon.</p>
+        <p>
+            <a class="btn btn-primary btn-large"
+            href="{% url give %}">Again?</a>
+        </p>
+    </div>
+</div>
+{% endblock %}
