@@ -6,24 +6,26 @@
 <div class="row">
     <div class="span12">
 
-        <div class="hero-unit">
-            {% if user.is_authenticated %}
-            <h1>Welcome {{user.first_name}}!</h1>
-            <p>Click the button to follow a random person and the next person to click the button will follow you.</p>
-            <p>
-                <a class="btn btn-primary btn-large"
-                href="{% url give %}">Sounds fun!</a>
-            </p>
-            {% else %}
-            <h1>Howdy stranger!</h1>
-            <p>Follow a random person on <a href="http://www.rdio.com/">Rdio</a> and receive a random follower later. Get started by signing in with your Rdio account.</p>
-            <p>
-                <a class="btn btn-primary btn-large"
-                href="{% url socialauth_begin backend='rdio_oauth2' %}">Sign In</a>
-            </p>
-            {% endif %}
 
+        {% if user.is_authenticated %}
+        <div class="page-header">
+            <h1>Welcome {{user.first_name}}!</h1>
         </div>
+        <p class="lead">Click the button to follow a random person and the next person to click the button will follow you.</p>
+        <p>
+            <a class="btn btn-primary btn-large"
+            href="{% url give %}">Sounds fun!</a>
+        </p>
+        {% else %}
+        <div class="page-header">
+            <h1>Howdy stranger!</h1>
+        </div>
+        <p class="lead">Follow a random person on <a href="http://www.rdio.com/">Rdio</a> and receive a random follower later. Get started by signing in with your Rdio account.</p>
+        <p>
+            <a class="btn btn-primary btn-large"
+            href="{% url socialauth_begin backend='rdio_oauth2' %}">Sign In</a>
+        </p>
+        {% endif %}
 
     </div>
 </div>
