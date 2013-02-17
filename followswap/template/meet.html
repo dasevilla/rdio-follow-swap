@@ -5,7 +5,31 @@
 {% block content %}
 <div class="row">
     <div class="span12">
-        <p>{{follower.first_name}} {{follower.last_name}} just started following {{followee.first_name}} {{followee.last_name}}</p>
+        <div class="page-header">
+            <h1>Meet {{followee_rdio.firstName}} {{followee_rdio.lastName}}! </h1>
+        </div>
+    </div>
+</div>
+
+<div class="row">
+    <div class="span2">
+        <ul class="thumbnails">
+            <li class="span4">
+                <a target="_blank" href="http://www.rdio.com{{followee_rdio.url}}">
+                    <img src="{{followee_rdio.icon}}" width="100" height="100">
+                </a>
+            </li>
+        </ul>
+    </div>
+    <div class="span10">
+        <p class="lead">You're {% if followee_rdio.gender == 'm'%}his{% else %}her{% endif %} new follower,
+            here's what we know about {% if followee_rdio.gender == 'm'%}him{% else %}her{% endif %}:</p>
+        <ul>
+            {%if followee_rdio.url %}<li><a target="_blank" href="http://www.rdio.com{{followee_rdio.url}}">Rdio</a></li>{% endif %}
+            {%if followee_rdio.twitterUrl %}<li><a target="_blank" href="{{followee_rdio.twitterUrl}}">Twitter</a></li>{% endif %}
+            {%if followee_rdio.facebookUrl %}<li><a target="_blank" href="{{followee_rdio.facebookUrl}}">Facebook</a></li>{% endif %}
+            {%if followee_rdio.lastfmUrl %}<li><a target="_blank" href="{{followee_rdio.lastfmUrl}}">Last.fm</a></li>{% endif %}
+        </ul>
         <p>
             <a class="btn btn-primary btn-large"
             href="{% url give %}">Again?</a>

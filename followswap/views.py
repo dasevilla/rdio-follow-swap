@@ -55,9 +55,11 @@ def give(request):
         follower_rdio_auth = request.user.social_auth.filter(provider='rdio_oauth2').get()
         token = follower_rdio_auth.extra_data['access_token']
 
+        followee_uid = new_connection.followee.social_auth.filter(provider='rdio_oauth2').get().uid
+
         payload = {
             'method': 'addFriend',
-            'user': new_connection.followee.social_auth.filter(provider='rdio_oauth2').get().uid
+            'user': followee_uid
         }
         r = requests.post('https://www.rdio.com/api/1/', auth=BearerAuth(token),
             data=payload)
@@ -66,9 +68,20 @@ def give(request):
         new_connection.status = 'connected'
         new_connection.save()
 
+        payload = {
+            'method': 'get',
+            'keys': followee_uid,
+            'extras': 'twitterUrl,facebookUrl,lastfmUrl',
+        }
+        r = requests.post('https://www.rdio.com/api/1/', auth=BearerAuth(token),
+            data=payload)
+
+        r.json()
+
         c = RequestContext(request, {
             'follower': new_connection.follower,
             'followee': new_connection.followee,
+            'followee_rdio': r.json()['result'][followee_uid]
         })
         return render_to_response('meet.html', c)
 
