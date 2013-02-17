@@ -8,6 +8,7 @@ admin.autodiscover()
 
 urlpatterns = patterns('',
     url(r'^$', 'followswap.views.home', name='index'),
+    url(r'^home/$', 'followswap.views.home', name='home'),
     url(r'^sign-out/$', 'django.contrib.auth.views.logout', {'next_page': '/'}, name='sign-out'),
     url(r'^admin/doc/', include('django.contrib.admindocs.urls')),
     url(r'^admin/', include(admin.site.urls)),
