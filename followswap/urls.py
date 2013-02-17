@@ -13,6 +13,7 @@ urlpatterns = patterns('',
     url(r'^admin/', include(admin.site.urls)),
     url(r'^auth/', include('social_auth.urls')),
     url(r'^give$', 'followswap.views.give', name='give'),
+    url(r'^history$', 'followswap.views.history', name='history'),
 )
 
 

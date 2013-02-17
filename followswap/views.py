@@ -85,6 +85,39 @@ def give(request):
         })
         return render_to_response('meet.html', c)
 
+def history(request):
+
+    rdio_auth = request.user.social_auth.filter(provider='rdio_oauth2').get()
+    token = rdio_auth.extra_data['access_token']
+
+
+    def get_user_info(token, user_keys):
+        payload = {
+            'method': 'get',
+            'keys': ','.join(user_keys),
+            'extras': 'twitterUrl,facebookUrl,lastfmUrl',
+        }
+        r = requests.post('https://www.rdio.com/api/1/', auth=BearerAuth(token),
+            data=payload)
+
+        return r.json()['result']
+
+
+    your_follow_connections = RdioConnection.objects.filter(status='connected').filter(follower=request.user)
+    people_you_follow = [conn.followee for conn in your_follow_connections]
+    people_you_follow_rdio_keys = [user.social_auth.filter(provider='rdio_oauth2').get().uid for user in people_you_follow]
+
+    your_followee_connections = RdioConnection.objects.filter(status='connected').filter(followee=request.user)
+    people_who_follow_you = set([conn.follower for conn in your_followee_connections])
+    people_who_follow_you_rdio_keys = [user.social_auth.filter(provider='rdio_oauth2').get().uid for user in people_who_follow_you]
+
+    user_data = get_user_info(token, set(people_you_follow_rdio_keys + people_who_follow_you_rdio_keys))
+
+    c = RequestContext(request, {
+        'followers': [user_data[user_key] for user_key in people_who_follow_you_rdio_keys],
+        'followees': [user_data[user_key] for user_key in people_you_follow_rdio_keys],
+    })
+    return render_to_response('history.html', c)
 
 def sign_out(request):
     response = logout(request, next_page=reverse('index'))
