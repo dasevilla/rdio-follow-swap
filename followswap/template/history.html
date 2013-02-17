@@ -1,0 +1,58 @@
+{% extends "base.html" %}
+
+{% block title %}Welcome{% endblock %}
+
+{% block content %}
+<div class="row">
+    <div class="span12">
+        <div class="page-header">
+            <h1>History</h1>
+        </div>
+    </div>
+</div>
+
+<div class="row">
+    <div class="span12">
+        <h5>People who are following you</h5>
+        <ul class="thumbnails">
+            {% for follower in followers %}
+            <li class="span3">
+                <div class="thumbnail">
+                    <img src="{{follower.icon}}" width="100" height="100" alt="{{follower.firstName}} {{follower.lastName}}"></a>
+                    <h3>{{follower.firstName}} {{follower.lastName}}</h3>
+                    <ul>
+                        {%if follower.url %}<li><a target="_blank" href="http://www.rdio.com{{follower.url}}">Rdio</a></li>{% endif %}
+                        {%if follower.twitterUrl %}<li><a target="_blank" href="{{follower.twitterUrl}}">Twitter</a></li>{% endif %}
+                        {%if follower.facebookUrl %}<li><a target="_blank" href="{{follower.facebookUrl}}">Facebook</a></li>{% endif %}
+                        {%if follower.lastfmUrl %}<li><a target="_blank" href="{{follower.lastfmUrl}}">Last.fm</a></li>{% endif %}
+                    </ul>
+                </div>
+            </li>
+            {% endfor %}
+        </ul>
+    </div>
+</div>
+
+<div class="row">
+    <div class="span12">
+        <h5>People you follow</h5>
+        <ul class="thumbnails">
+            {% for followee in followees %}
+            <li class="span2">
+                <div class="thumbnail">
+                    <img src="{{followee.icon}}" width="100" height="100" alt="{{followee.firstName}} {{followee.lastName}}"></a>
+                    <h3>{{followee.firstName}} {{followee.lastName}}</h3>
+                    <ul>
+                        {%if followee.url %}<li><a target="_blank" href="http://www.rdio.com{{followee.url}}">Rdio</a></li>{% endif %}
+                        {%if followee.twitterUrl %}<li><a target="_blank" href="{{followee.twitterUrl}}">Twitter</a></li>{% endif %}
+                        {%if followee.facebookUrl %}<li><a target="_blank" href="{{followee.facebookUrl}}">Facebook</a></li>{% endif %}
+                        {%if followee.lastfmUrl %}<li><a target="_blank" href="{{followee.lastfmUrl}}">Last.fm</a></li>{% endif %}
+                    </ul>
+                </div>
+            </li>
+            {% endfor %}
+        </ul>
+    </div>
+</div>
+
+{% endblock %}
